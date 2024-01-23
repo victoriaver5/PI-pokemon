@@ -1,14 +1,19 @@
 const { DataTypes } = require('sequelize');
 
-module.exports = (sequelize, DataTypes) => {
-    const Type = sequelize.define('Type', {
-      nombre: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-    });
+module.exports = (sequelize) => {
+  const TypesPokemon = sequelize.define('TypesPokemon', {
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+  });
 
-  
-    return Type;
+  TypesPokemon.associate = (models) => {
+    TypesPokemon.belongsToMany(models.Pokemon, {
+      through: 'PokemonType',
+      foreignKey: 'typeId',
+    });
   };
-  
+ 
+  return TypesPokemon;
+};

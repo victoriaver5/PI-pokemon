@@ -3,6 +3,7 @@ const { DataTypes } = require('sequelize');
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
   const Pokemon = sequelize.define('Pokemon', {
+  
     nombre: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -33,6 +34,14 @@ module.exports = (sequelize) => {
       type: DataTypes.FLOAT,
     },
   });
+  
+  Pokemon.associate = function(models) {
+    Pokemon.belongsToMany(models.TypesPokemon, {
+      through: 'PokemonType',
+      foreignKey: 'pokemonId',
+    });
+  };
+  
 
   return Pokemon;
 };
