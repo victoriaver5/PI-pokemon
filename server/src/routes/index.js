@@ -5,8 +5,8 @@ const typesPokemonRouter = require('./RouteTypesPokemon'); // Importa el router 
 const router = Router();
 
 // Configurar los routers
-router.use('/typesPokemon', typesPokemonRouter); // Configura el router de types en la ruta /types
 router.use('/pokemons', pokemonsRouter); // Configura el router de pokemons en la ruta /pokemons
+router.use('/types', typesPokemonRouter);
 
 module.exports = router;
 

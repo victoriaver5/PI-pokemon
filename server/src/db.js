@@ -4,6 +4,8 @@ const fs = require('fs');
 const path = require('path');
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 
+
+
 console.log('Conectando a la base de datos...');
 console.log(`DB_USER: ${DB_USER}, DB_HOST: ${DB_HOST}`); // Añade este log para verificar las variables
 
