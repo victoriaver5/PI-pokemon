@@ -24,11 +24,10 @@ const getPokemonByNameHandler = async (req, res) => {
   try {
     const { name } = req.params; // Cambiado de req.query a req.params
     console.log(`Buscando el Pokémon: ${name}`);
-    const result = await PokemonController.getPokemonByName(name);
-    res.json(result);
+    const response = name ? await findByName(name) : await findAllPokemons();
+    res.status(200).json(response);
   } catch (error) {
-    console.error('Error en getPokemonByNameHandler:', error);
-    res.status(500).json({ error: 'Error interno del servidor' });
+    res.status(500).json({ "error": error.message });
   }
 };
 

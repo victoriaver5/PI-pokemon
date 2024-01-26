@@ -57,37 +57,29 @@ const getPokemonById = async (id) => {
 };
 
 const getPokemonByName = async (name) => {
-  try {
-    // Buscar en la base de datos por nombre
-    const dbPokemon = await Pokemon.findOne({
-      where: { name: name }
-    });
+  const nameSearch = name.trim().toLowerCase();
+  const pokemonsDb = await Pokemon.findAll({
+    where: { name: {[Op.iLike]: nameSearch }},
+    include: {
+      model: Type,
+      attributes: ["name"],
+      through: {
+        as: "types",
+      },
+    },
+  });
 
-    if (dbPokemon) {
-      return { pokemon: dbPokemon };
-    }
+  const pokemonNameDb= pokemonsDb.map(pokemon => ({...pokemon.toJSON(), 
+    types:pokemon.types.map(type => type.name).flat().sort().join(', ')    
+  }));
 
-    // Si no está en la base de datos, buscar en la API
-    const { data } = await axios.get(`${apiUrl}/pokemon/${name}`);
-    ;
+  const pokemonsFilterApiRaw= (await axios.get(`https://pokeapi.co/api/v2/pokemon/${name.trim().toLowerCase()}`)).data;
+  const pokemonsFilterApi = cleanPokemonApi([pokemonsFilterApiRaw])
 
-    const apiPokemon = {
-      id: data.id,
-      name: data.name,
-      image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${data.id}.png`,
-      life: data.stats.find(stat => stat.stat.name === "hp").base_stat,
-      attack: data.stats.find(stat => stat.stat.name === "attack").base_stat,
-      defense: data.stats.find(stat => stat.stat.name === "defense").base_stat,
-      speed: data.stats.find(stat => stat.stat.name === "speed").base_stat,
-      height: data.height,
-      weight: data.weight,
-    };
+  if(!pokemonNameDb.length && !pokemonsFilterApi.length) throw new Error("This pokemon doesn't exists")
+   
 
-    return { pokemon: apiPokemon };
-  } catch (error) {
-    console.error('Error en getPokemonByName:', error);
-    throw new Error(`Error en getPokemonByName: ${error.message}`);
-  }
+  return [...pokemonNameDb,...pokemonsFilterApi];
 };
 
 const createPokemon = async (pokemonData) => {
