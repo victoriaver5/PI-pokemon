@@ -1,4 +1,17 @@
-import { ADD_FAV, FILTER, GET_POKE_BY_NAME, ORDER, REMOVE_FAV } from "../actionsTypes/actionsTypes";
+import {
+ADD_FAV,
+CLEAN_DETAIL,
+CLEAN_INFO_FILTERS,
+ERROR,
+FILTER,
+FILTER_TYPES,
+GET_ALL_POKEMONS,
+GET_DETAIL_POKEMON,
+GET_POKE_BY_NAME,
+GET_TYPES,
+ORDER,
+REMOVE_FAV
+} from "../actionsTypes/actionsTypes";
 
 const initialState = {
   myFavorites: [],
@@ -7,6 +20,12 @@ const initialState = {
 
 const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
+    case GET_ALL_POKEMONS:
+      return {
+        ...state,
+        allPokemon: payload,
+      };
+
     case ADD_FAV:
       return {
         ...state,
@@ -34,6 +53,18 @@ const reducer = (state = initialState, { type, payload }) => {
       );
       return { ...state, myFavorites: allPokemonFiltered };
 
+      case GET_TYPES:
+        return {
+          ...state,
+          types: payload,
+        };
+
+      case FILTER_TYPES:
+        const allPokemonFilteredByType = state.allPokemon.filter(pokemon =>
+          payload === "allPokemon" ? true : pokemon.type === payload
+        );
+        return { ...state, myFavorites: allPokemonFilteredByType };
+
     case ORDER:
       const myFavoritesCopy = [...state.myFavorites];
       return {
@@ -43,9 +74,32 @@ const reducer = (state = initialState, { type, payload }) => {
           : myFavoritesCopy.sort((a, b) => b.name.localeCompare(a.name))
       }
 
-    default:
-      return { ...state };
-  }
+      case GET_DETAIL_POKEMON:
+        return {
+          ...state,
+          detailPokemon: payload,
+        };
+  
+      case CLEAN_DETAIL:
+        return {
+          ...state,
+          detailPokemon: null,
+        };
+  
+      case CLEAN_INFO_FILTERS:
+        return {
+          ...state,
+          infoFilters: null,
+        };
+      
+      case ERROR:
+        console.error('Error en la aplicación:', payload);
+        return state; // Manejo básico de errores, puedes ajustarlo según necesites
+  
+      default:
+        return { ...state };
+    }
+  
 }
 
 export default reducer;

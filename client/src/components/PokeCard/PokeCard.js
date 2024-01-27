@@ -1,13 +1,11 @@
-// PokeCard.js
+import "./PokeCard.css";
 
-import "./PokeCard.css"
+import { Link } from "react-router-dom";
 
-import {Link} from "react-router-dom"
-
-const Card = (pokemon) => {
+const PokeCard = (pokemon) => {
     return(
-        <div className>
-            <Link className  to={`/detail/${pokemon.id}`}>
+        <div className="your-class-name"> {/* Agrega una clase CSS correcta */}
+            <Link className="your-class-name" to={`/detail/${pokemon.id}`}>
                 <h4>{pokemon.name.toUpperCase()}</h4>
             </Link>
             <img src={pokemon.image} alt="img" />
@@ -16,4 +14,4 @@ const Card = (pokemon) => {
     )
 }
 
-export default Card;
+export default PokeCard;

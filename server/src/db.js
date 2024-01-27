@@ -5,7 +5,7 @@ const path = require('path');
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 const PokemonModel = require ("./models/Pokemon") //requerimos los modelos 
 const TypesPokemonModel = require ("./models/TypesPokemon")
-
+const UserModel = require ("./models/User")
 
 console.log('Conectando a la base de datos...');
 console.log(`DB_USER: ${DB_USER}, DB_HOST: ${DB_HOST}`); // Añade este log para verificar las variables
@@ -56,14 +56,15 @@ sequelize.models = Object.fromEntries(capsEntries);
 // En sequelize.models están todos los modelos importados como propiedades
 PokemonModel(sequelize,Sequelize);  
 TypesPokemonModel(sequelize,Sequelize);  
+UserModel(sequelize,Sequelize);
 // Para relacionarlos hacemos un destructuring
-const { Pokemon, TypesPokemon} = sequelize.models;
+const { Pokemon, TypesPokemon,User} = sequelize.models;
 
 // Aca vendrian las relaciones
 
 Pokemon.belongsToMany(TypesPokemon, { through: 'PokemonType', foreignKey: 'pokemonId' });
 TypesPokemon.belongsToMany(Pokemon, { through: 'PokemonType', foreignKey: 'typeId' });
-
+User.hasMany(Pokemon, { foreignKey: 'userId' });
 
 module.exports = {
    ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

@@ -4,6 +4,23 @@ import * as ActionTypes from '../actionsTypes/actionsTypes';
 
 import axios from 'axios';
 
+export const getAllPokemons = () => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.get('http://localhost:3001/pokemon/'); // Reemplaza la URL con la correcta
+      return dispatch({
+        type: ActionTypes.GET_ALL_POKEMONS,
+        payload: response.data,
+      });
+    } catch (error) {
+      return dispatch({
+        type: ActionTypes.ERROR,
+        payload: error,
+      });
+    }
+  };
+};
+
 export const addFav = (character) => {
   const endpoint = 'http://localhost:3001/pokemon/fav';
   return async (dispatch) => {
@@ -54,7 +71,7 @@ export const getPokemonByName = (name) => {
 };
 
 // Corrección en la acción FILTER
-export const filterCards = (type) => {
+export const filterPokemons = (type) => {
   if (ActionTypes.POKEMON_TYPES.includes(type) || type === 'allPokemon') {
     return { type: ActionTypes.FILTER, payload: type };
   } else {
@@ -63,11 +80,33 @@ export const filterCards = (type) => {
   }
 };
 
-export const filterCardsByGender = (gender) => {
-  return { type: ActionTypes.FILTER, payload: gender };
+export const getTypes = () => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.get('http://localhost:3001/types'); // Reemplaza la URL con la correcta
+      return dispatch({
+        type: ActionTypes.GET_TYPES,
+        payload: response.data,
+      });
+    } catch (error) {
+      return dispatch({
+        type: ActionTypes.ERROR,
+        payload: error,
+      });
+    }
+  };
 };
 
-export const orderCards = (order) => {
+export const filterTypesPokemons = (type) => {
+  if (ActionTypes.POKEMON_TYPES.includes(type) || type === 'allPokemon') {
+    return { type: ActionTypes.FILTER_TYPES, payload: type };
+  } else {
+    console.error('Tipo de Pokémon no válido:', type);
+    return { type: 'INVALID_TYPE', payload: type };
+  }
+};
+
+export const orderPokemons = (order) => {
   return { type: ActionTypes.ORDER, payload: order };
 };
 
@@ -75,15 +114,14 @@ export const orderCards = (order) => {
 export const getDetailPokemons = (id) => {
   return async function (dispatch) {
     try {
-      const response = await axios.get(`/pokemons/${id}`);
+      const response = await axios.get(`http://localhost:3001/pokemon/${id}`); // Agregado el prefijo de la API
       return dispatch({
         type: ActionTypes.GET_DETAIL_POKEMON,
         payload: response.data,
       });
     } catch (error) {
       return dispatch({
-        type: ActionTypes.ERROR,
-        payload: error,
+        type: ActionTypes.ERROR, 
       });
     }
   };

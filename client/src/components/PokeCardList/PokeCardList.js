@@ -1,16 +1,16 @@
 import './PokeCardList.css'; // Asegúrate de importar el archivo CSS correctamente
 
-import { cleanInfoFilters, filterPokemons, filterTypesPokemons, getAllPokemons, orderPokemons } from '../../redux/actions';
+import { cleanInfoFilters, filterPokemons, filterTypesPokemons, getAllPokemons, orderPokemons } from '../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 
-import Card from '../Card/Card';
+import PokeCard from '../PokeCard/PokeCard';
 import React from 'react'; // Asegúrate de importar React si estás utilizando componentes de React
 
 const PokeCardList = () => {
   const dispatch = useDispatch(); // Agrega la declaración de dispatch
   const pokemons = useSelector((state) => state.pokemons);
   const types = useSelector((state) => state.types);
-  const filters = useSelector((state) => state.filterInfo);
+ // const filters = useSelector((state) => state.filterInfo);
 
   const handleFiltersTypes = (event) => {
     dispatch(filterTypesPokemons(event.target.value));
@@ -28,8 +28,6 @@ const PokeCardList = () => {
     dispatch(cleanInfoFilters());
     dispatch(getAllPokemons());
   };
-
-  const viewPokemons = pokemons; // Supongo que tu vistaPokemons es igual a tu lista de pokémons, ajusta según sea necesario
 
   return (
     <div>
@@ -69,24 +67,16 @@ const PokeCardList = () => {
         </button>
       </div>
       <br />
-      <div className="your-class-name">
-        {viewPokemons.length !== 0 ? (
-          viewPokemons.map((pokemon) => (
-            <Card key={pokemon.id} id={pokemon.id} name={pokemon.name} image={pokemon.image} types={pokemon.types} />
-          ))
-        ) : viewPokemons.length === 0 && filters.event === 0 ? (
-          <div>
-            <h2>There are no video games with those filters applied.</h2>
-          </div>
-        ) : (
-          <div>
-            <h2>Loading...</h2>
-          </div>
-        )}
-        <br />
+
+      <div>
+        {/* Aquí deberías mapear tus pokemons y renderizar los componentes Card */}
+        {pokemons.map((pokemon) => (
+          <PokeCard key={pokemon.id} {...pokemon} />
+        ))}
       </div>
     </div>
   );
 };
 
 export default PokeCardList;
+
