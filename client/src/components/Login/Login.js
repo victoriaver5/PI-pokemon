@@ -1,3 +1,5 @@
+// Login.js
+
 import "./Login.css"
 
 import { useState } from "react";
@@ -33,7 +35,7 @@ const Login = ({ login }) => {
         {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
         <hr />
         <label htmlFor="password">Password:</label>
-        <input className="input" type="text" name="password" value={userData.password} onChange={handleChange} />
+        <input className="input" type="password" name="password" value={userData.password} onChange={handleChange} />
         {errors.password && <p style={{ color: "red" }}>{errors.password}</p>}
   
         <button className="button" type="submit">Submit</button>

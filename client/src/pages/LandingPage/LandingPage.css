@@ -1,0 +1,30 @@
+/* Ejemplo de estilos básicos, ajusta según sea necesario */
+.landing-page {
+    position: relative;
+    height: 100vh;
+  }
+  
+  .background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Para asegurar que la imagen esté detrás del contenido */
+  }
+  
+  .background-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ajusta el tamaño de la imagen para cubrir el contenedor */
+  }
+  
+  .welcome-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #fff;
+  }
+  

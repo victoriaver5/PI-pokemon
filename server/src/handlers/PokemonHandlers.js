@@ -22,15 +22,18 @@ const getPokemonByIdHandler = async (req, res) => {
 };
 const getPokemonByNameHandler = async (req, res) => {
   try {
-    const { name } = req.params; // Cambiado de req.query a req.params
-    console.log(`Buscando el Pokémon: ${name}`);
-    const response = name ? await findByName(name) : await findAllPokemons();
-    res.status(200).json(response);
+    const { name } = req.query; // Cambiado de req.params a req.query
+    const pokemon = await PokemonController.getPokemonByName(name);
+
+    if (pokemon) {
+      res.status(200).json(pokemon);
+    } else {
+      res.status(404).json({ "error": "Pokemon not found" });
+    }
   } catch (error) {
     res.status(500).json({ "error": error.message });
   }
 };
-
 
 const createPokemonHandler = async (req, res) => {
   try {

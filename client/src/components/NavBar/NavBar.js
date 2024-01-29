@@ -1,26 +1,24 @@
+// NavBar.js
+
 import "./NavBar.css";
 
 import { Link } from "react-router-dom";
 import React from "react";
-import SearchBar from "../SearchBar/SearchBar";
 
-const NavBar = () => {
+const NavBar = ({ onSearch, setAccess, logout }) => {
   return (
-    <div className="your-class-name"> {/* Agrega una clase CSS correcta */}
-      {/* Enlaces a redes sociales o cualquier otro elemento */}
-      
-      {/* Enlace a la página "Home" */}
-      <Link to="/home" className="your-class-name">
+    <div className="navbar">
+      <Link to="/home" className="nav-link">
         <p>Home</p>
       </Link>
-
-      {/* Enlace a la página "Create Pokemon" */}
-      <Link to="/PokeFormCreate" className="your-class-name">
+      <Link to="/PokeFormCreate" className="nav-link">
         <p>Create Pokemon</p>
       </Link>
-
-      {/* Componente SearchBar */}
-      <SearchBar />
+      <div className="nav-right">
+        <button className="logout-button" onClick={logout}>
+          Logout
+        </button>
+      </div>
     </div>
   );
 };

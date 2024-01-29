@@ -58,7 +58,7 @@ PokemonModel(sequelize,Sequelize);
 TypesPokemonModel(sequelize,Sequelize);  
 UserModel(sequelize,Sequelize);
 // Para relacionarlos hacemos un destructuring
-const { Pokemon, TypesPokemon,User} = sequelize.models;
+const { Pokemon, TypesPokemon, User} = sequelize.models;
 
 // Aca vendrian las relaciones
 

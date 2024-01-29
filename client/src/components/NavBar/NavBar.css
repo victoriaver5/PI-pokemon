@@ -1,0 +1,38 @@
+/* NavBar.css */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(81, 147, 167);
+  padding: 10px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: black;
+  margin: 0 10px;
+  font-size: 18px;
+}
+
+.logout-button {
+  background-color: rgb(201, 204, 39);
+  color: rgb(0, 0, 0);
+  cursor: pointer;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: background-color 0.4s ease;
+  box-shadow: 1px 1px 1px rgb(239, 228, 228);
+}
+
+.logout-button:hover {
+  background-color: rgb(2, 2, 2);
+  color: rgb(219, 181, 9);
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+}

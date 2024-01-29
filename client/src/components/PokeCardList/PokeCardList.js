@@ -10,7 +10,6 @@ const PokeCardList = () => {
   const dispatch = useDispatch(); // Agrega la declaración de dispatch
   const pokemons = useSelector((state) => state.pokemons);
   const types = useSelector((state) => state.types);
- // const filters = useSelector((state) => state.filterInfo);
 
   const handleFiltersTypes = (event) => {
     dispatch(filterTypesPokemons(event.target.value));
@@ -69,10 +68,14 @@ const PokeCardList = () => {
       <br />
 
       <div>
-        {/* Aquí deberías mapear tus pokemons y renderizar los componentes Card */}
-        {pokemons.map((pokemon) => (
-          <PokeCard key={pokemon.id} {...pokemon} />
-        ))}
+        {/* Verifica que pokemons no sea undefined o una matriz vacía antes de mapear */}
+        {pokemons && pokemons.length > 0 ? (
+          pokemons.map((pokemon) => (
+            <PokeCard key={pokemon.id} {...pokemon} />
+          ))
+        ) : (
+          <p>No hay Pokémon disponibles.</p>
+        )}
       </div>
     </div>
   );

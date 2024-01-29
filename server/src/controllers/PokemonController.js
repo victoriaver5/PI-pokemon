@@ -57,29 +57,39 @@ const getPokemonById = async (id) => {
 };
 
 const getPokemonByName = async (name) => {
-  const nameSearch = name.trim().toLowerCase();
-  const pokemonsDb = await Pokemon.findAll({
-    where: { name: {[Op.iLike]: nameSearch }},
-    include: {
-      model: Type,
-      attributes: ["name"],
-      through: {
-        as: "types",
+  try {
+    // Buscar en la API
+    const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
+    const pokemonFromApi = response.data;
+
+    // Si se encuentra en la API, devolverlo
+    if (pokemonFromApi) {
+      return pokemonFromApi;
+    }
+
+    // Si no se encuentra en la API, buscar en la base de datos
+    const pokemonDb = await Pokemon.findOne({
+      where: { name: { [Op.iLike]: name } },
+      include: {
+        model: Type,
+        attributes: ["name"],
+        through: {
+          as: "types",
+        },
       },
-    },
-  });
+    });
 
-  const pokemonNameDb= pokemonsDb.map(pokemon => ({...pokemon.toJSON(), 
-    types:pokemon.types.map(type => type.name).flat().sort().join(', ')    
-  }));
+    // Si no se encuentra en la base de datos, devolver null
+    if (!pokemonDb) {
+      return null;
+    }
 
-  const pokemonsFilterApiRaw= (await axios.get(`https://pokeapi.co/api/v2/pokemon/${name.trim().toLowerCase()}`)).data;
-  const pokemonsFilterApi = cleanPokemonApi([pokemonsFilterApiRaw])
-
-  if(!pokemonNameDb.length && !pokemonsFilterApi.length) throw new Error("This pokemon doesn't exists")
-   
-
-  return [...pokemonNameDb,...pokemonsFilterApi];
+    // Si se encuentra en la base de datos, devolverlo
+    return pokemonDb;
+  } catch (error) {
+    console.error('Error en getPokemonByName:', error);
+    throw new Error('Error interno al buscar Pokémon');
+  }
 };
 
 const createPokemon = async (pokemonData) => {

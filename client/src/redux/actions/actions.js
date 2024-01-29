@@ -7,7 +7,7 @@ import axios from 'axios';
 export const getAllPokemons = () => {
   return async function (dispatch) {
     try {
-      const response = await axios.get('http://localhost:3001/pokemon/'); // Reemplaza la URL con la correcta
+      const response = await axios.get('http://localhost:3001/pokemon/');
       return dispatch({
         type: ActionTypes.GET_ALL_POKEMONS,
         payload: response.data,
@@ -15,12 +15,11 @@ export const getAllPokemons = () => {
     } catch (error) {
       return dispatch({
         type: ActionTypes.ERROR,
-        payload: error,
+        payload: error.message || 'Hubo un error al obtener los Pokémon.',
       });
     }
   };
 };
-
 export const addFav = (character) => {
   const endpoint = 'http://localhost:3001/pokemon/fav';
   return async (dispatch) => {

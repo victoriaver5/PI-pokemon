@@ -15,8 +15,10 @@ module.exports = (sequelize) => {
   }, {
     hooks: {
       beforeCreate: async (user) => {
-        const saltRounds = 10;
-        user.password = await bcrypt.hash(user.password, saltRounds);
+        if (user.password) {
+          const saltRounds = 10;
+          user.password = await bcrypt.hash(user.password, saltRounds);
+        }
       },
     },
     timestamps: false,
