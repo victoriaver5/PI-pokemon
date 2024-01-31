@@ -7,14 +7,14 @@ const LandingPage = () => {
   return (
     <div className="landing-page">
       <div className="background-image">
-        <img src="51d97c2f6a5e940bef86f36bb1f1ba0d.jpg" alt="fondo pokemon" />
+        <img src="https://www.lavanguardia.com/andro4all/hero/2019/02/Fondos-de-pantalla-de-Pokemon.jpg?width=1200" alt="fondo pokemon" />
       </div>
       <div className="welcome-message">
-        <h1>Bienvenido a la Pokédex</h1>
-        <p>Encuentra y explora el mundo de los Pokémon</p>
-  
+        <div className="welcome-text">
+          <h1>Bienvenido a la Pokédex</h1>
+        </div>
         <Link to="/home">
-          <button>Ingresar</button>
+          <button className='ingresar-button'>Ingresar</button>
         </Link>
       </div>
     </div>

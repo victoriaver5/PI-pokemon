@@ -22,7 +22,7 @@ const getPokemonByIdHandler = async (req, res) => {
 };
 const getPokemonByNameHandler = async (req, res) => {
   try {
-    const { name } = req.query; // Cambiado de req.params a req.query
+    const { name } = req.query; 
     const pokemon = await PokemonController.getPokemonByName(name);
 
     if (pokemon) {

@@ -1,17 +1,20 @@
 const { Pokemon, TypesPokemon } = require('../db');
 const axios = require('axios');
+const { Op } = require('sequelize');
 
 
 let apiUrl = 'https://pokeapi.co/api/v2/pokemon';
 
-const getAllPokemons = async () => {
+const getAllPokemons = async (page = 1, pageSize = 20) => {
   try {
+    const offset = (page - 1) * pageSize;
+
     // Obtener todos los Pokémon de la base de datos
     const dbPokemons = await Pokemon.findAll();
     console.log('Pokémon de la base de datos:', dbPokemons);
 
     // Realizar la petición a la API
-    const response = await axios.get(`${apiUrl}?limit=100`);
+    const response = await axios.get(`${apiUrl}?limit=${pageSize}&offset=${offset}`);
     const apiPokemons = response.data.results;
     console.log('Pokémon de la API:', apiPokemons);
 
@@ -71,10 +74,10 @@ const getPokemonByName = async (name) => {
     const pokemonDb = await Pokemon.findOne({
       where: { name: { [Op.iLike]: name } },
       include: {
-        model: Type,
+        model: Pokemon,
         attributes: ["name"],
         through: {
-          as: "types",
+          as: "pokemons",
         },
       },
     });

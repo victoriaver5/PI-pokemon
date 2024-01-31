@@ -1,0 +1,108 @@
+/* Contenedor principal */
+.poke-card-list-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Imagen del gif */
+.gifContainer {
+  text-align: center;
+}
+
+.gifContainer img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Contenedor de filtros y botón */
+.filtersContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Filtros individuales */
+.orderFilter,
+.typesFilter,
+.storageFilter {
+  padding: 8px;
+}
+
+/* Estilos adicionales para los filtros individuales */
+.filtersContainer div {
+  display: flex;
+  align-items: center;
+}
+
+/* Estilos específicos para los labels de los filtros */
+.filtersContainer label {
+  margin-right: 10px; /* Ajusta el margen según tu preferencia */
+}
+
+/* Estilos para los inputs de los filtros */
+.filtersContainer input,
+.filtersContainer select {
+  width: 150px; /* Ajusta el ancho según tu preferencia */
+  padding: 8px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Botón "Show all Pokemon" */
+.poke-card-list-button {
+  padding: 8px 16px;
+  background-color: #fceb02;
+  color: #000000;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.poke-card-list-button:hover {
+  background-color: #1089ec;
+}
+
+/* Contenedor de tarjetas de Pokémon */
+.pokemonsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-around;
+}
+
+/* Tarjeta de Pokémon individual */
+.cardContainer {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-around;
+}
+
+.cardContainer h2 {
+  width: 100%;
+  text-align: center;
+}
+
+/* Estilos para pantalla pequeña */
+@media screen and (max-width: 768px) {
+  .filtersContainer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filtersContainer select,
+  .showAllPokemonsButton {
+    width: 100%;
+  }
+
+  .gifContainer img {
+    width: 100%;
+    height: auto;
+  }
+}

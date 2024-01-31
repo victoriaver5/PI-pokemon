@@ -9,7 +9,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getAllPokemons());
-    dispatch(getTypes());
+    dispatch(getTypes()); // Agrega esta línea para cargar los tipos al inicio
   }, [dispatch]);
 
   return (

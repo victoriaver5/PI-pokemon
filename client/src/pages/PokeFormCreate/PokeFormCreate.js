@@ -1,15 +1,12 @@
-import './PokeFormCreate.css';
+import "./PokeFormCreate.css"
 
 import React, { useEffect, useState } from 'react';
-import { createPokemon, getTypes } from '../../redux/actions';
+import { createNewPokemon, getTypes } from '../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
-
-import validation from './validation';
 
 const PokeFormCreate = () => {
   const dispatch = useDispatch();
   const types = useSelector((state) => state.types);
-  const allPokemons = useSelector((state) => state.pokemons);
 
   useEffect(() => {
     dispatch(getTypes());
@@ -28,33 +25,14 @@ const PokeFormCreate = () => {
     typeTwo: '',
   });
 
-  const [errors, setErrors] = useState({
-    name: '',
-    image: '',
-    hp: '',
-    attack: '',
-    defense: '',
-    speed: '',
-    height: '',
-    weight: '',
-    typeOne: '',
-    typeTwo: '',
-  });
-
-  const handleChange = (event, prop) => {
-    const value = event.target.value;
-
-    setErrors(validation({ ...form, [prop]: value }, allPokemons));
-    setForm({ ...form, [prop]: value });
-  };
-
-  const handleTypeChange = (event, type) => {
-    setForm({ ...form, [type]: event.target.value });
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setForm({ ...form, [name]: value });
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(createPokemon(form));
+    dispatch(createNewPokemon(form));
   };
 
   return (
@@ -64,54 +42,89 @@ const PokeFormCreate = () => {
         <img src={form.image} alt="Pokemon" />
 
         <form onSubmit={handleSubmit}>
-          {/* Resto de los campos de entrada utilizando handleChange */}
-          <label htmlFor="name">Name:</label>
-          <input type="text" name="name" value={form.name} onChange={(e) => handleChange(e, 'name')} />
+          <div>
+            <label htmlFor="name">Name:</label>
+            <input type="text" name="name" value={form.name} onChange={handleInputChange} />
+          </div>
 
-          {/* Otros campos de entrada utilizando handleChange */}
-          
-          {/* Selector para el tipo uno */}
+          <div>
+            <label htmlFor="image">Image URL:</label>
+            <input type="text" name="image" value={form.image} onChange={handleInputChange} />
+          </div>
+
+          <div>
+            <label htmlFor="hp">Life:</label>
+            <input type="text" name="hp" value={form.hp} onChange={handleInputChange} />
+          </div>
+
+          <div>
+            <label htmlFor="attack">Attack:</label>
+            <input type="text" name="attack" value={form.attack} onChange={handleInputChange} />
+          </div>
+
+          <div>
+            <label htmlFor="defense">Defense:</label>
+            <input type="text" name="defense" value={form.defense} onChange={handleInputChange} />
+          </div>
+
+          <div>
+            <label htmlFor="speed">Speed:</label>
+            <input type="text" name="speed" value={form.speed} onChange={handleInputChange} />
+          </div>
+
+          <div>
+            <label htmlFor="height">Height:</label>
+            <input type="text" name="height" value={form.height} onChange={handleInputChange} />
+          </div>
+
+          <div>
+            <label htmlFor="weight">Weight:</label>
+            <input type="text" name="weight" value={form.weight} onChange={handleInputChange} />
+          </div>
+
           <div>
             <label htmlFor="typeOne">Type One:</label>
-            <select onChange={(e) => handleTypeChange(e, 'typeOne')} name="typeOne">
-              <option value="All">Select</option>
+            <select
+              className="types"
+              name="typeOne"
+              value={form.typeOne}
+              onChange={handleInputChange}
+            >
+              <option value="" hidden>
+                Select Type
+              </option>
               {types.map((type) => (
                 <option key={type.id} value={type.name}>
-                  {type.name}
+                  {type.name ? type.name.charAt(0).toUpperCase() + type.name.substring(1) : ''}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label htmlFor="typetwo">Type two:</label>
+            <select
+              className="types"
+              name="typetwo"
+              value={form.typetwo}
+              onChange={handleInputChange}
+            >
+              <option value="" hidden>
+                Select Type
+              </option>
+              {types.map((type) => (
+                <option key={type.id} value={type.name}>
+                  {type.name ? type.name.charAt(0).toUpperCase() + type.name.substring(1) : ''}
                 </option>
               ))}
             </select>
           </div>
 
-          {/* Selector para el tipo dos */}
           <div>
-            <label htmlFor="typeTwo">Type Two:</label>
-            <select onChange={(e) => handleTypeChange(e, 'typeTwo')} name="typeTwo">
-              <option value="All">Select</option>
-              {types.map((type) => (
-                <option key={type.id} value={type.name}>
-                  {type.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Botón de envío */}
-          <div>
-            {errors.flag === true ? (
-              <button disabled>Create Pokemon</button>
-            ) : (
-              <button type="submit">Create Pokemon</button>
-            )}
+            <button type="submit" disabled={!form.name || !form.typeOne || !form.typeTwo}>
+              Create Pokemon
+            </button>
           </div>
         </form>
-      </div>
-
-      {/* Validación de errores */}
-      <div className="error-validation">
-        <ul>
-          {/* Listado de mensajes de error */}
-        </ul>
       </div>
     </div>
   );

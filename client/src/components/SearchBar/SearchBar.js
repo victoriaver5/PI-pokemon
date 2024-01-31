@@ -5,18 +5,18 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 
 const SearchBar = () => {
-    const [name, setName] = useState("");
-    const dispatch = useDispatch();
+  const [name, setName] = useState("");
+  const dispatch = useDispatch();
 
-    const handleChange = (event) => {
-        setName(event.target.value);
-    }
+  const handleChange = (event) => {
+    setName(event.target.value);
+  };
 
-    const onSearch = (event) => {
-        event.preventDefault()
-        dispatch(getPokemonByName(name));
-    }
-
+  const onSearch = (event) => {
+    event.preventDefault();
+    dispatch(getPokemonByName(name));
+  };
+  
     return(
         <div>
             <form onSubmit={onSearch}>
